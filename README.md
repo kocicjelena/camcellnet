@@ -6,11 +6,10 @@
 
 - Activate the virtual environment: 
 
-source venv/bin/activate (on macOS/Linux) 
-
-    or .\venv\Scripts\activate (on Windows)
+  source venv/bin/activate (on macOS/Linux) or .\venv\Scripts\activate (on Windows)
 
 
 - Install the required packages: pip install -r requirements.txt
 
-- run python cc.py
+
+- cd cellnet && python cc.py 
