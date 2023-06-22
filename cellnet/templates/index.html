@@ -26,7 +26,7 @@
 
 
       <form method="post" action="{{ url_for('answer') }}" id="aa2">
-          <p>Compute the mean and standard deviation of copy number for all unique human gene products/proteins (Table)</p>
+          <p>Compute the mean and standard deviation of copy number for all unique human gene products/proteins</p>
           
           <button type="submit" name="answer2" id="answer2" value="answer2">Calculate</button>
         </form> 
@@ -60,7 +60,7 @@
 
 
       <form method="post" action="{{ url_for('answer') }}" id="a3">
-      <p>Calculate the percentile rank (in terms of copy number ranks) for each gene product/protein.</p>
+      <p>Calculate the percentile rank for each gene product/protein.</p>
         
       <button type="submit" name="answer3" id="answer3" value="answer3">Calculate</button>
       </form>
@@ -97,8 +97,7 @@
 
 
       <form method="post" action="{{ url_for('answer') }}" id="b1">
-      <p>What is the domain with the highest average abundance (i.e. across all copies of the domain in all gene
-        products/proteins)? </p>
+      <p>What is the domain with the highest average abundance? </p>
       <button type="submit" name="banswer1" id="banswer1" value="banswer1">Calculate</button>
       </form>
 
@@ -110,8 +109,7 @@
   
 
     <form method="post" action="{{ url_for('answer') }}" id="b2">
-    <p>Compute the mean and standard deviation of domain average abundance for each protein (they have the
-      same labels as genes) domain by combining these two files also, compute the percentile rank</p>
+    <p>Compute the mean and standard deviation of domain average abundance for each protein domain and also, compute the percentile rank</p>
     <button type="submit"  name="banswer2" id="banswer2" value="banswer2">Calculate</button>
     </form>
 
