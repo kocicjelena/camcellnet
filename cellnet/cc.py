@@ -6,14 +6,6 @@ import re
 
 Flask_App = Flask(__name__) 
 
-
-def gen_percentile_rank(dataset, value):
-    num_values_below = sum(1 for x in dataset if x < value)
-    total_values = len(dataset)
-    percentile_rank = (num_values_below / total_values) * 100
-    return percentile_rank
-
-
 result1=None
 result2=None
 table_data_a2=None
@@ -131,10 +123,9 @@ def answer():
             table_data_a3=table_data_a3,
             table_data_b2=table_data_b2,
             table_data_b22=table_data_b22
-            #calculation_success=True
         )
     
 
 if __name__ == '__main__':
-    Flask_App.debug = True
+    # Flask_App.debug = True
     Flask_App.run()
