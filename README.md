@@ -1,15 +1,26 @@
 
 
 
-- Create a new virtual environment: python3 -m venv venv
+- Create a new virtual environment: 
+
+  python3 -m venv venv
 
 
 - Activate the virtual environment: 
 
-  source venv/bin/activate (on macOS/Linux) or .\venv\Scripts\activate (on Windows)
+  source venv/bin/activate (on macOS/Linux) 
+  or 
+  .\venv\Scripts\activate (on Windows)
 
 
-- Install the required packages: pip install -r requirements.txt
+- Install the required packages: 
+
+  pip install -r requirements.txt
 
 
-- cd cellnet && python cc.py 
+- cd cellnet && python ccnet.py 
+
+
+  Remark:
+  HTML page present results in numbers or DataFrames (tables)
+  panda library is used, only

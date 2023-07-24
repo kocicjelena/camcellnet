@@ -8,17 +8,39 @@
         .hidden {
           display: none;
         }
+        .style_b2 {
+          float: left;
+          width: 100%;
+          padding: 20px;
+          height: auto;
+        }
+        .style_b2_left {
+         width: 50%; 
+         float:left
+      }
+      .style_b2_right {
+        width: 50%; 
+        float:right
+     } 
+        
+        .style_a {
+          float: left;
+          width: 100%;
+          padding: 20px;
+          height: auto;
+        }
       </style>
 </head>
 <body>
     <h1>Questions to answer:</h1>
     <h3>Questions group A:</h3>
 
+  
       <form method="post" action="{{ url_for('answer') }}" id="aa1">
         <p>How many unique gene/copy-number values are in the file?</p>
       <button type="submit" name="answer1" id="answer1" value="answer1">Calculate</button>
       </form>
-      {% if result1 is defined and result1 is not none %}
+      {% if result1 and result1 is not none %}
       <div>{{ result1 }}</div>
       {% else %}
       <div class="hidden">{{ result1 }}</div>
@@ -26,36 +48,15 @@
 
 
       <form method="post" action="{{ url_for('answer') }}" id="aa2">
-          <p>Compute the mean and standard deviation of copy number for all unique human gene products/proteins</p>
+          <p>Compute the mean and standard deviation of copy number for all unique human gene products/proteins.</p>
           
           <button type="submit" name="answer2" id="answer2" value="answer2">Calculate</button>
         </form> 
 
       {% if table_data_a2 is defined and table_data_a2 is not none and (table_data_a2|default([]))|length > 0%}
-      <table>
-        <thead>
-            <tr>
-              <th>gn</th>
-              <th>mean</th>
-              <th>std</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if (table_data_a2|default([]))[0:]|length > 0%}
-            {% for row in table_data_a2[0:] %}
-            <tr>
-                {% for value in row %}
-                <td>{{ value }}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-            {% else %}
-            <tr class="hidden"></tr> 
-            {% endif %}
-        </tbody>
-      </table>
+      <div class="style_a">{{ table_data_a2 | safe }}</div>
       {% else %}
-        <div class="hidden"></div>
+      <div class="hidden">{{ table_data_a2 }}</div>
       {% endif %}
 
 
@@ -66,27 +67,8 @@
       </form>
 
       {% if table_data_a3 is defined and table_data_a3 is not none and (table_data_a3|default([]))|length > 0%}
-      <table>
-        <thead>
-            <tr>
-              <th>gn</th>
-              <th>percentile rank (%)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if (table_data_a3|default([]))[1:]|length > 0%}
-            {% for row in table_data_a3[1:] %}
-            <tr>
-                {% for value in row %}
-                <td>{{ value }}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-            {% else %}
-            <tr class="hidden"></tr> 
-            {% endif %}
-        </tbody>
-      </table>
+      <div class="style_a">{{ table_data_a3 | safe  }}</div>
+    
       {% else %}
         <div class="hidden"></div>
       {% endif %}
@@ -109,62 +91,27 @@
   
 
     <form method="post" action="{{ url_for('answer') }}" id="b2">
-    <p>Compute the mean and standard deviation of domain average abundance for each protein domain and also, compute the percentile rank</p>
+    <p>Compute the mean and standard deviation of domain average abundance for each protein domain and also, compute the percentile rank.</p>
     <button type="submit"  name="banswer2" id="banswer2" value="banswer2">Calculate</button>
     </form>
 
+    <div class="style_b2">
+      <div class="style_b2_left">
       {% if table_data_b2 is defined and table_data_b2 is not none and (table_data_b2|default([]))|length > 0%}
-      <table>
-        <thead>
-            <tr>
-              <th>gn</th>
-              <th>mean</th>
-              <th>std</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if (table_data_b2|default([]))[0:]|length > 0%}
-            {% for row in table_data_b2[0:] %}
-            <tr>
-                {% for value in row %}
-                <td>{{ value }}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-            {% else %}
-            <tr class="hidden"></tr> 
-            {% endif %}
-        </tbody>
-      </table>
+      <div>{{ table_data_b2 | safe  }}</div>
       {% else %}
       <div class="hidden"></div>
       {% endif %}
-
+      </div>
+      <div class="style_b2_right">
       {% if table_data_b22 is defined and table_data_b22 is not none and (table_data_b22|default([]))|length > 0%}
-      <table>
-        <thead>
-            <tr>
-              <th>gn</th>
-              <th>percentile rank (%)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if (table_data_b22|default([]))[0:]|length > 0%}
-            {% for row in table_data_b22[0:] %}
-            <tr>
-                {% for value in row %}
-                <td>{{ value }}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-            {% else %}
-            <tr class="hidden"></tr> 
-            {% endif %}
-        </tbody>
-      </table>
+      <div>{{ table_data_b22 | safe  }}</div>
       {% else %}
       <div class="hidden"></div>
       {% endif %}
+      </div>
+      <br style="clear:both;"/>
+    </div>
 
 </body>
 </html>
