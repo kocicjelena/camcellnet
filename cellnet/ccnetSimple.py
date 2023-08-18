@@ -38,38 +38,25 @@ a3.drop(['Mean', 'std'], axis=1)
 # B
 file_path_b = 'static/9606_gn_dom.txt'
 second_file = pd.read_csv(file_path_b, sep='\t')
-
-#  - combining the data from two files -
-#  Rough assumtion for getting the data from 9606_abund: 
-#  percentile of abundace of the gene is the measure
-#  of abundance of the domains of that gene
-
-def weighted_mean(group):
-    weights = group['End'] - group['Start']
-    return (group['percentile_rank'] / 100) *((group['Eval'] * weights).sum() / weights.sum())
-
 second_file.columns = second_file.columns.str.replace("#Gn", "Gn")
+temp1=second_file.merge(temp_a, on = "Gn", how = "outer")
+temp2 =temp1.drop(['Start', 'End', 'Eval'], axis=1)
 
-# combine the files
-comb = pd.merge(second_file, a3, on = "Gn", how = "inner")
+#B1
+grouped = temp1.groupby('Domain')
+b1 = grouped['Mean-copy-number'].mean().max()
 
-# DataFrameGroupBy object will contain groups of rows from the comb dataframe, 
-# where each group corresponds to a unique combination of values in both the ‘Gn’ and ‘Domain’ columns.
-grouped = comb.groupby(['Gn', 'Domain'])
-abundance = grouped.apply(weighted_mean)
+#B2
+b21=temp2.groupby(['Domain','Gn']).apply(lambda x: x)
+domain_mean=temp2.groupby(['Domain','Gn']).mean()
+domain_std=temp2.groupby(['Domain','Gn']).std()
+b21['Mean']=domain_mean['Mean-copy-number']
+b21['STD']=domain_std['Mean-copy-number']
+b21=b21.drop(['Mean-copy-number'], axis=1)
 
-# B1
-b1 = abundance.groupby(level='Domain').mean().max()
-
-# B2
-b21_mean = abundance.groupby(level='Domain').mean().reset_index()
-b21_mean.columns = ['Domain','Mean']
-b21_std = abundance.groupby(level='Domain').std().reset_index()
-b21_std.columns = ['Domain','STD']
-b21 = pd.merge(b21_mean, b21_std, on="Domain")
-b22=b21.copy()
-# percentile rank in % (calculation * 100)
+b22 = b21.drop(['STD'], axis=1)
 b22['percentile_rank'] = b22['Mean'].rank(pct=True) * 100
+b22=b22.drop(['Mean'], axis=1)
 
 @Flask_App.route('/', methods=['GET'])
 def index():
@@ -94,7 +81,7 @@ def answer():
         result2=b1
     elif 'banswer2' in request.form:
         table_data_b2=b21.head(20).to_html(classes='table table-striped', index=False)
-        table_data_b22=b22.drop(['Mean', 'STD'], axis=1).head(20).to_html(classes='table table-striped', index=False)
+        table_data_b22=b22.head(20).to_html(classes='table table-striped', index=False)
     else:
         pass
     
@@ -111,3 +98,5 @@ def answer():
 if __name__ == '__main__':
     # Flask_App.debug = True
     Flask_App.run()
+
+
