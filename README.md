@@ -18,7 +18,7 @@
   pip install -r requirements.txt
 
 
-- cd cellnet && python ccnet.py 
+- cd cellnet && python ccnetSimple.py 
 
 
   Remark:
